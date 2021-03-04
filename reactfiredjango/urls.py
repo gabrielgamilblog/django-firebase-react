@@ -16,11 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from todo.views import DashView
+from todo.views import DashView, ToDoCreateView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('', DashView.as_view(), name='dash')
+    path('', DashView.as_view(), name='dash'),
+    path('add/', ToDoCreateView.as_view(), name='create-todo')
 ]
