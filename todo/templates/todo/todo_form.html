@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% block BODY_BLOCK %}
+<div class="row mt-4">
+  <div class="col-lg-6">
+    <h1>Add ToDo</h1>
+    <form method="post" class="mt-4">
+      {% csrf_token %} {{ form|crispy }}
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-outline-primary" href="{% url 'dash' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
