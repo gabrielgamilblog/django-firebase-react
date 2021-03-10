@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
+from rest_framework.test import APITestCase
 
 from .models import ToDo
 
@@ -14,3 +15,16 @@ class ToDoTestCase(TestCase):
     def test_dash(self):
         response = self.client.get(reverse('dash'))
         self.assertEqual(response.status_code, 200)
+
+
+class AccountTests(APITestCase):
+    def setUp(self) -> None:
+        self.todo = ToDo.objects.create(name='run tests')
+
+    def test_update(self):
+        self.assertEqual(ToDo.objects.filter(is_done=True).exists(), False)
+
+        response = self.client.put(reverse('update-todo-done', kwargs={'pk': self.todo.pk}), {'is_done': False})
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(ToDo.objects.filter(is_done=True).exists(), True)

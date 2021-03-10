@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from todo.views import DashView, ToDoCreateView
+from todo.views import DashView, ToDoCreateView, UpdateTodoAPIView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', DashView.as_view(), name='dash'),
-    path('add/', ToDoCreateView.as_view(), name='create-todo')
+    path('add/', ToDoCreateView.as_view(), name='create-todo'),
+    path('api/<int:pk>/update/', UpdateTodoAPIView.as_view(), name='update-todo-done')
 ]
