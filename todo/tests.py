@@ -24,7 +24,7 @@ class AccountTests(APITestCase):
     def test_update(self):
         self.assertEqual(ToDo.objects.filter(is_done=True).exists(), False)
 
-        response = self.client.put(reverse('update-todo-done', kwargs={'pk': self.todo.pk}), {'is_done': False})
+        response = self.client.put(reverse('update-todo-done', kwargs={'pk': self.todo.pk}), {'is_done': True})
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(ToDo.objects.filter(is_done=True).exists(), True)
