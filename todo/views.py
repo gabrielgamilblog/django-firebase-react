@@ -1,18 +1,16 @@
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView
-from rest_framework.generics import UpdateAPIView
+from rest_framework.generics import UpdateAPIView, CreateAPIView
 
 from .models import ToDo
-from .serializers import TodoDoneSerializer
+from .serializers import TodoDoneSerializer, TodoCreateSerializer
 
 
 class DashView(TemplateView):
     template_name = 'dash.html'
 
 
-class ToDoCreateView(CreateView):
-    model = ToDo
-    fields = ['name']
+class CreateTodoAPIView(CreateAPIView):
+    serializer_class = TodoCreateSerializer
 
 
 class UpdateTodoAPIView(UpdateAPIView):

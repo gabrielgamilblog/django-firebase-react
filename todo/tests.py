@@ -1,23 +1,21 @@
-from django.test import TestCase
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
 from .models import ToDo
 
 
-class ToDoTestCase(TestCase):
+class ToDoCreateTestCase(APITestCase):
     def test_create_todo(self):
         response = self.client.post(reverse('create-todo'), {'name': 'Test my todo'})
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 201)
         self.assertEqual(ToDo.objects.count(), 1)
-
 
     def test_dash(self):
         response = self.client.get(reverse('dash'))
         self.assertEqual(response.status_code, 200)
 
 
-class AccountTests(APITestCase):
+class ToDoUpdateTests(APITestCase):
     def setUp(self) -> None:
         self.todo = ToDo.objects.create(name='run tests')
 
