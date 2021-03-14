@@ -2,6 +2,9 @@ import React from "react";
 import firebase from "firebase/app";
 import "firebase/firestore";
 
+import { useAddToDo } from "./hooks";
+import ToDoForm from "./TodoForm";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDrXE3xx4fIE_KbbCUUQjeFPMqQFR6FdNY",
   authDomain: "test-app-notifications-e38ef.firebaseapp.com",
@@ -17,6 +20,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 const App = () => {
+  const { addToDo, adding, success, error } = useAddToDo();
+
   const handleStatusChange = (id) => {
     console.log("Change for Id: ", id);
     fetch(`/api/${id}/update/`, {
@@ -49,8 +54,21 @@ const App = () => {
   }, [db]);
   return (
     <div>
-      <h2>Todo's</h2>
-      <Table todoList={todoList} onToDoStatusChange={handleStatusChange} />
+      <h1>Todo</h1>
+      <div class="row mt-4">
+        <div class="col-lg-6">
+          <ToDoForm
+            handleSaveToDo={(todoName) => addToDo({ todoName })}
+            loading={adding}
+            success={success}
+          />
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-lg-6">
+          <Table todoList={todoList} onToDoStatusChange={handleStatusChange} />
+        </div>
+      </div>
     </div>
   );
 };
